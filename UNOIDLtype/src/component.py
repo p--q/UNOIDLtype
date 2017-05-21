@@ -3,17 +3,22 @@
 import uno
 import unohelper
 from com.sun.star.lang import XServiceInfo
-from com.sun.star.test import XSomethingB
-IMPLE_NAME = "TestComponentB"
-SERVICE_NAME = "com.sun.star.test.SomethingB"
-class TestComponentB(unohelper.Base, XServiceInfo, XSomethingB):  
-    # unohelperを使わない方法はよくわからないので略。
+from com.blogspot.pq import XUnoInsp
+IMPLE_NAME = "UnoInsp"
+SERVICE_NAME = "com.blogspot.pq.UnoInsp"
+class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):  
     def __init__(self, ctx, *args):
         self.ctx = ctx
         self.args = args
-    # XSomethingB
-    def methodTwo(self,val):
-        return val + " by Python UNO Component"
+    # XUnoInsp
+    def stringTypeArg(self,val):  # 文字列を引数にとって文字列を返す。
+        return val
+    def stringSeqenceTypeArg(self,tp):  # タプルを引数にとってタプルを返す。
+        return tp
+    def booleanTypeArg(self,boo):  # ブーリアンを引数にとってブーリアンを返す。
+        return boo
+    def anyTypeArg(self,obj):  # Any型を引数にとって返す。
+        return obj
     # XServiceInfo
     def getImplementationName(self):
         return IMPLE_NAME
@@ -23,4 +28,4 @@ class TestComponentB(unohelper.Base, XServiceInfo, XSomethingB):
         return (SERVICE_NAME,)
 # Registration
 g_ImplementationHelper = unohelper.ImplementationHelper()
-g_ImplementationHelper.addImplementation(TestComponentB, IMPLE_NAME, (SERVICE_NAME,),)
+g_ImplementationHelper.addImplementation(ObjInsp, IMPLE_NAME, (SERVICE_NAME,),)

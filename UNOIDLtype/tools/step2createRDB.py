@@ -4,9 +4,8 @@ import sys
 import os
 import glob
 import subprocess
-from step1settings import BASE_NAME,src_path
+from step1settings import BASE_NAME,createBK,src_path
 unordb_file = BASE_NAME + ".uno.rdb"
-# src_path = os.path.join(os.path.dirname(sys.path[0]),"src")  # srcフォルダの絶対パスを取得。
 def main():
     # 各々のパスの取得。
     uno_path = os.environ["UNO_PATH"]  # programフォルダへの絶対パスを取得。
@@ -29,6 +28,7 @@ def main():
             args = [idlc,"-I.","-I" + sdkidl_path, "-O..", i]
             subprocess.run(args)  # idlファイルをコンパイルして親フォルダに出力する。
         os.chdir(src_path)  # srcフォルダに移動
+        createBK(unordb_file)  # すでにあるrdbファイルをbkに改名 
         urds = glob.glob("*.urd")  # urdファイルのリストを取得。
         if urds:  # urdファイルがあるとき
             args = [regmerge,unordb_file,"/UCR"]

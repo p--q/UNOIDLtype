@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 
 # This name will be rdb file name, .components file name, oxt file name.
-BASE_NAME = "PythonComponent"  # これがrdbファイル名、.componentsファイル名、oxtファイル名になる。
+BASE_NAME = "PyUnoComponent"  # これがrdbファイル名、.componentsファイル名、oxtファイル名になる。
 
 # a list of a dict of Python UNO Component Files: (file name,service implementation name, service name,handled protocol)
-LST = [
-    {"PYTHON_UNO_Component":"component.py","IMPLE_NAME":'TestComponentB',"SERVICE_NAME":'com.sun.star.test.SomethingB',"HANDLED_PROTOCOL":"" }
-       ]  # (Python UNO Componentファイル名、実装サービス名、サービス名,プロトコール名)の辞書のリスト。
+LST = [{
+    "PYTHON_UNO_Component":"component.py",  # Python UNO Componentファイル名。これからのimportはunoのモジュールが読み込めないエラーが出るから無理。
+    "IMPLE_NAME":'UnoInsp',  # 実装サービス名
+    "SERVICE_NAME":'com.blogspot.pq.UnoInsp',  # サービス名
+    "HANDLED_PROTOCOL":""  # プロトコール名
+    }] 
 
 import os
 import sys

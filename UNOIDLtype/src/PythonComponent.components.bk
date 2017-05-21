@@ -1,10 +1,2 @@
 <?xml version='1.0' encoding='utf-8'?>
-<components xmlns="http://openoffice.org/2010/uno-components">
-	<component
-		loader="com.sun.star.loader.Python"
-		uri="component.py">
-		<implementation name="TestComponentB">
-			<service name="com.sun.star.test.SomethingB" />
-		</implementation>
-	</component>
-</components>
+<components xmlns="http://openoffice.org/2010/uno-components"><component loader="com.sun.star.loader.Python" uri="component.py"><implementation name="UnoInsp"><service name="com.blogspot.pq.UnoInsp" /></implementation></component></components>
