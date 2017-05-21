@@ -5,9 +5,11 @@
 
 module com {  module blogspot {  module pq {
     interface XUnoInsp {
-        string methodTwo([in]string value);
+        string stringTypeArg([in] string value);
+        sequence <string> stringSeqenceTypeArg([in] sequence <string> values);
+        boolean booleanTypeArg([in] boolean boo);
+        any anyTypeArg([in] any obj);
     };
-    
 }; }; };
 
 #endif
