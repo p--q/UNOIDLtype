@@ -1,5 +1,5 @@
-#ifndef _com_blogspot_pq_UnoInsp_idl_
-#define _com_blogspot_pq_UnoInsp_idl_
+#ifndef _com_blogspot_pq_XUnoInsp_idl_
+#define _com_blogspot_pq_XUnoInsp_idl_
 
 #include <com/sun/star/uno/XInterface.idl>
 

@@ -24,13 +24,9 @@ def main():
         os.chdir(myidl_path)  # idlフォルダに移動
         for i in glob.iglob("*.urd"):  # すでにあるurdファイルを削除。
             os.remove(i)
-        for i in glob.iglob("X*.idl"):  # まずインターフェイスをコンパイルする。
+        for i in glob.iglob("*.idl"):  # 各idlファイルについて
             args = [idlc,"-I.","-I" + sdkidl_path, "-O..", i]
             subprocess.run(args)  # idlファイルをコンパイルして親フォルダに出力する。
-        for i in glob.iglob("*.idl"):  # 各idlファイルについて
-            if not i.startswith("X"):  # インターフェイス以外をコンパイル。
-                args = [idlc,"-I.","-I" + sdkidl_path, "-O..", i]
-                subprocess.run(args)  # idlファイルをコンパイルして親フォルダに出力する。
         os.chdir(src_path)  # srcフォルダに移動
         createBK(unordb_file)  # すでにあるrdbファイルをbkに改名 
         urds = glob.glob("*.urd")  # urdファイルのリストを取得。
