@@ -9,7 +9,9 @@ SERVICE_NAME = "com.blogspot.pq.UnoInsp"
 class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):  
     def __init__(self, ctx, *args):
         self.ctx = ctx
-        self.args = args
+        self.args = tuple()  # NoneだとUNOIDLの戻り値と型が合わなくなる。
+        if isinstance(args, tuple) and len(args) > 0:  # インスタンス化時の引数があるとき
+            self.args = args
     # XUnoInsp
     def stringTypeArg(self,val):  # 文字列を引数にとって文字列を返す。
         return val
@@ -19,6 +21,8 @@ class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):
         return boo
     def anyTypeArg(self,obj):  # Any型を引数にとって返す。
         return obj
+    def getInitArgs(self):  # createInstanceWithArgumentsAndContext()で取得した引数（タプル)を返す。
+        return self.args
     # XServiceInfo
     def getImplementationName(self):
         return IMPLE_NAME

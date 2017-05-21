@@ -19,5 +19,5 @@ def createBK(path):  # 引数のファイルがあれば拡張子bkを付ける�
     if os.path.exists(path):  #ファイルがすでに存在するとき。
         bk = path + ".bk"  # バックアップファイル名の取得。
         if os.path.exists(bk): os.remove(bk)  # Windowsの場合は上書きできないので削除が必要。
-        os.rename(path, bk)  # 既存のファイルを拡張子bkでバックアップ。 
-        print("The previous version of " + os.path.basename(path) + " file has been renamed for backup.")  
+#         os.rename(path, bk)  # 既存のファイルを拡張子bkでバックアップ。 
+#         print("The previous version of " + os.path.basename(path) + " file has been renamed for backup.")  
