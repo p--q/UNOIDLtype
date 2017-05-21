@@ -11,8 +11,14 @@ class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):
         self.ctx = ctx
         self.args = args
     # XUnoInsp
-    def methodTwo(self,val):
-        return val + " by Python UNO Component"
+    def stringTypeArg(self,val):  # 文字列を引数にとって文字列を返す。
+        return val
+    def stringSeqenceTypeArg(self,tp):  # タプルを引数にとってタプルを返す。
+        return tp
+    def booleanTypeArg(self,boo):  # ブーリアンを引数にとってブーリアンを返す。
+        return boo
+    def anyTypeArg(self,obj):  # Any型を引数にとって返す。
+        return obj
     # XServiceInfo
     def getImplementationName(self):
         return IMPLE_NAME
