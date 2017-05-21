@@ -17,9 +17,16 @@ if ctx:
     print("Using remote servicemanager")
     if not smgr:
         print( "ERROR: no service manager" )
-SomethingB = smgr.createInstanceWithContext("TestComponentB", ctx)  # サービス名のcom.sun.star.test.SomethingBでもよい。
-s = SomethingB.methodTwo("Hello World!こんにちは")
-print(s)
+        
+# PythonComponentの実行
+try:       
+    pycomp = smgr.createInstanceWithContext("com.blogspot.pq.UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
+    s = pycomp.methodTwo("Hello World!こんにちは")
+    print(s)
+except:
+    import traceback
+    traceback.print_exc()
+    
 # soffice.binの終了処理。これをしないとLibreOfficeを起動できなくなる。
 desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
 from com.sun.star.beans import PropertyValue

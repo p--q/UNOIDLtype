@@ -3,8 +3,8 @@
 	<component
 		loader="com.sun.star.loader.Python"
 		uri="component.py">
-		<implementation name="TestComponentB">
-			<service name="com.sun.star.test.SomethingB" />
+		<implementation name="UnoInsp">
+			<service name="com.blogspot.pq.UnoInsp" />
 		</implementation>
 	</component>
 </components>
