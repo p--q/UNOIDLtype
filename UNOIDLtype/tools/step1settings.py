@@ -6,7 +6,7 @@ BASE_NAME = "PythonComponent"  # これがrdbファイル名、.componentsファ
 
 # a list of a dict of Python UNO Component Files: (file name,service implementation name, service name,handled protocol)
 LST = [
-    {"PYTHON_UNO_Component":"component.py","IMPLE_NAME":'TestComponentB',"SERVICE_NAME":'com.sun.star.test.SomethingB',"HANDLED_PROTOCOL":"" }
+    {"PYTHON_UNO_Component":"component.py","IMPLE_NAME":'UnoInsp',"SERVICE_NAME":'com.blogspot.pq.UnoInsp',"HANDLED_PROTOCOL":"" }
        ]  # (Python UNO Componentファイル名、実装サービス名、サービス名,プロトコール名)の辞書のリスト。
 
 import os
