@@ -6,7 +6,7 @@ import subprocess
 import glob
 from step1settings import src_path
 def main():
-    print("Do not start LibreOffice until Extended Manager is displayed.")
+    print("Do not start LibreOffice until Extension Manager is displayed.")
     os.chdir(os.path.join(src_path,"..","oxt"))  # oxtフォルダの絶対パスの取得。))  # oxtフォルダに移動。
     oxt = glob.glob("*.oxt")  # oxtファイルのリストを取得。
     if oxt:
