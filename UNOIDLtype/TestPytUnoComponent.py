@@ -35,6 +35,7 @@ try:
     s = pycomp.anyTypeArg("Any型に文字列を渡す")
     print(s)
     pycomp = smgr.createInstanceWithArgumentsAndContext("com.blogspot.pq.UnoInsp", ("withArgs",), ctx)  # サービス名か実装名でインスタンス化。
+    pycomp = smgr.createInstanceWithArgumentsAndContext("com.blogspot.pq.UnoInsp", ("withArgs",), ctx)  # サービス名か実装名でインスタンス化。
     s = pycomp.getInitArgs()
     print(s)
 except:

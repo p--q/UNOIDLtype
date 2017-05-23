@@ -1,17 +1,22 @@
 #!/opt/libreoffice5.2/program/python
 # -*- coding: utf-8 -*-
-import uno
 import unohelper
 from com.sun.star.lang import XServiceInfo
 from com.blogspot.pq import XUnoInsp
-IMPLE_NAME = "UnoInsp"
-SERVICE_NAME = "com.blogspot.pq.UnoInsp"
+IMPLE_NAME = None
+SERVICE_NAME = None
+def create(imple_name, service_name, ctx, *args):
+    nonlocal IMPLE_NAME
+    nonlocal SERVICE_NAME
+    if IMPLE_NAME is None:
+        IMPLE_NAME = imple_name 
+    if SERVICE_NAME is None:
+        SERVICE_NAME = service_name
+    return ObjInsp(ctx, *args)
 class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):  
     def __init__(self, ctx, *args):
         self.ctx = ctx
-        self.args = tuple()  # NoneだとUNOIDLの戻り値と型が合わなくなる。
-        if isinstance(args, tuple) and len(args) > 0:  # インスタンス化時の引数があるとき
-            self.args = args
+        self.args = args  # 引数がないときもNoneではなくタプルが入る。
     # XUnoInsp
     def stringTypeArg(self,val):  # 文字列を引数にとって文字列を返す。
         return val
@@ -30,6 +35,3 @@ class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):
         return name == SERVICE_NAME
     def getSupportedServiceNames(self):
         return (SERVICE_NAME,)
-# Registration
-g_ImplementationHelper = unohelper.ImplementationHelper()
-g_ImplementationHelper.addImplementation(ObjInsp, IMPLE_NAME, (SERVICE_NAME,),)

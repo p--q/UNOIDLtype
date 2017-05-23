@@ -1,19 +1,21 @@
 #!/opt/libreoffice5.2/program/python
 # -*- coding: utf-8 -*-
-from step1settings import BASE_NAME,createBK,src_path
+from settings import getDIC, createBK
 import subprocess
 import glob
 import os
 import shutil
 import sys
 from itertools import chain
-def main():
-    oxtf = os.path.join(src_path,"..","oxt")  # oxtフォルダの絶対パスの取得。
+def createOXT(DIC=None):
+    if DIC is None:
+        DIC = getDIC()
+    oxtf = os.path.join(DIC["SRC_PATH"],"..","oxt")  # oxtフォルダの絶対パスの取得。
     if not os.path.exists(oxtf):  # oxtフォルダがなければ作成する。
         os.mkdir(oxtf)
-    oxt = os.path.join(oxtf,BASE_NAME + ".oxt") # 作成するoxtファイルの絶対パスを取得。
-    createBK(oxt)  # すでにあるoxtファイルをbkに改名。
-    os.chdir(src_path)  # srcフォルダに移動。
+    oxt = os.path.join(oxtf,DIC["BASE_NAME"] + ".oxt") # 作成するoxtファイルの絶対パスを取得。
+    createBK(oxt, DIC["BACKUP"])  # すでにあるoxtファイルをbkに改名。
+    os.chdir(DIC["SRC_PATH"])  # srcフォルダに移動。
     if not shutil.which("zip"):  # zipコマンドの有効を確認。
         print("The zip command must be valid for execution.")
         sys.exit()
@@ -41,5 +43,5 @@ def main():
             args.extend(lst_files)
             subprocess.run(args)  # pythonpathフォルダをoxtファイルに収納。
 if __name__ == "__main__":
-    sys.exit(main())
+    createOXT()
     

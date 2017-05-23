@@ -4,9 +4,10 @@ import sys
 import os
 import glob
 import subprocess
-from step1settings import BASE_NAME,createBK,src_path
-unordb_file = BASE_NAME + ".uno.rdb"
-def main():
+from settings import getDIC, createBK
+def createRDB(DIC=None):
+    if DIC is None:
+        DIC = getDIC()
     # 各々のパスの取得。
     uno_path = os.environ["UNO_PATH"]  # programフォルダへの絶対パスを取得。
     regmerge = os.path.join(uno_path,"regmerge")  # regmergeの絶対パスを取得。
@@ -19,7 +20,7 @@ def main():
         if not os.path.exists(p):
             print("Erorr: " + p + " does not exit.")
             sys.exit()    
-    myidl_path = os.path.join(src_path,"idl")  # PyDevプロジェクトのidlフォルダへの絶対パスを取得。
+    myidl_path = os.path.join(DIC["SRC_PATH"],"idl")  # PyDevプロジェクトのidlフォルダへの絶対パスを取得。
     if os.path.exists(myidl_path):  # idlフォルダがあるとき
         os.chdir(myidl_path)  # idlフォルダに移動
         for i in glob.iglob("*.urd"):  # すでにあるurdファイルを削除。
@@ -27,20 +28,21 @@ def main():
         for i in glob.iglob("*.idl"):  # 各idlファイルについて
             args = [idlc,"-I.","-I" + sdkidl_path, "-O..", i]
             subprocess.run(args)  # idlファイルをコンパイルして親フォルダに出力する。
-        os.chdir(src_path)  # srcフォルダに移動
-        createBK(unordb_file)  # すでにあるrdbファイルをbkに改名 
+        os.chdir(DIC["SRC_PATH"])  # srcフォルダに移動
+        unordb_file = DIC["BASE_NAME"] + ".uno.rdb"  # RDBファイル名を取得。
+        createBK(unordb_file, DIC["BACKUP"])  # すでにあるrdbファイルのバックアップ。
         urds = glob.glob("*.urd")  # urdファイルのリストを取得。
         if urds:  # urdファイルがあるとき
             args = [regmerge,unordb_file,"/UCR"]
             args.extend(urds)
             subprocess.run(args)  # mergeKeyName /UCR(UNO core reflection)も追加してurdファイルをuno.rdbファイルにまとめる。
         if os.path.exists(unordb_file):  # rdbファイルができていれば、
-            args = [regview,unordb_file]
-            subprocess.run(args)  # rdbファイルの中身を出力。  
+#             args = [regview,unordb_file]
+#             subprocess.run(args)  # rdbファイルの中身を出力。  
             print(unordb_file + " creation succeeded.")   
             for i in glob.iglob("*.urd"):  # すでにあるurdファイルを削除。
                 os.remove(i)        
         else:  # urdファイルが出力されていないとき
             print("urd files are not created.")
 if __name__ == "__main__":
-    sys.exit(main())
+    createRDB()

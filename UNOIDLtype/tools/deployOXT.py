@@ -4,10 +4,12 @@ import os
 import sys
 import subprocess
 import glob
-from step1settings import src_path
-def main():
-    print("Do not start LibreOffice until Extended Manager is displayed.")
-    os.chdir(os.path.join(src_path,"..","oxt"))  # oxtフォルダの絶対パスの取得。))  # oxtフォルダに移動。
+from settings import getDIC, createBK
+def deployOXT(DIC=None):
+    if DIC is None:
+        DIC = getDIC()
+    print("Do not start LibreOffice until Extension Manager is displayed.")
+    os.chdir(os.path.join(DIC["SRC_PATH"],"..","oxt"))  # oxtフォルダの絶対パスの取得。))  # oxtフォルダに移動。
     oxt = glob.glob("*.oxt")  # oxtファイルのリストを取得。
     if oxt:
         oxt_path = oxt[0]
@@ -21,4 +23,4 @@ def main():
     else:
         print("There is no oxt file.")
 if __name__ == "__main__":
-    sys.exit(main())    
+    deployOXT() 
