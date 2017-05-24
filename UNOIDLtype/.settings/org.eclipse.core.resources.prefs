@@ -1,16 +1,14 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/component.py=utf-8
 encoding//src/pythonpath/component.py=utf-8
 encoding//tools/createOXT.py=utf-8
 encoding//tools/createRDB.py=utf-8
+encoding//src/PyUnoComponent.py=utf-8
+encoding//src/pythonpath/component.py=utf-8
+encoding//tools/createIDL.py=utf-8
+encoding//tools/createXCUs.py=utf-8
 encoding//tools/createXMLs.py=utf-8
 encoding//tools/deployOXT.py=utf-8
 encoding//tools/settings.py=utf-8
-encoding//tools/step1settings.py=utf-8
-encoding//tools/step2createRDB.py=utf-8
-encoding//tools/step3createXCUs.py=utf-8
-encoding//tools/step4createManifest.py=utf-8
-encoding//tools/step5createOXT.py=utf-8
-encoding//tools/step6depoyOXT.py=utf-8
 encoding/TestPytUnoComponent.py=utf-8
-encoding/TestPythonComponent.py=utf-8
