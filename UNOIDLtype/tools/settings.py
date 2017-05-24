@@ -44,7 +44,7 @@ def getDIC():
     os.chdir(DIC["SRC_PATH"])  # srcフォルダに移動。
     for pycompo in glob.iglob("*.py"):  # srcフォルダの直下にあるpyファイルのリストを取得。
         p = Pycompo(pycompo) 
-        if p.imple_name and p.service_name:
+        if p.imple_name and p.service_name:  # 実装サービス名とサービス名を取得できたファイルをPython UNO Componentファイルとみなす。
             DIC["Pycompos"].append(p)
     if not DIC["Pycompos"]:
         print("There is no component file in the src folder.")

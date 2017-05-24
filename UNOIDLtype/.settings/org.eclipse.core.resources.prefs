@@ -2,7 +2,7 @@
 eclipse.preferences.version=1
 encoding//src/PyUnoComponent.py=utf-8
 encoding//src/pythonpath/component.py=utf-8
-encoding//tools/createIDL.py=utf-8
+encoding//tools/createIDLs.py=utf-8
 encoding//tools/createOXT.py=utf-8
 encoding//tools/createRDB.py=utf-8
 encoding//tools/createXCUs.py=utf-8

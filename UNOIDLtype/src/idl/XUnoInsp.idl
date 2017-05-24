@@ -1,16 +1,4 @@
-#ifndef _com_blogspot_pq_XUnoInsp_idl_
-#define _com_blogspot_pq_XUnoInsp_idl_
+#ifndef _com_blogspot_pq_XUnoInsp_
+#define _com_blogspot_pq_XUnoInsp_
 
 #include <com/sun/star/uno/XInterface.idl>
-
-module com {  module blogspot {  module pq {
-    interface XUnoInsp {
-        string stringTypeArg([in] string value);
-        sequence <string> stringSeqenceTypeArg([in] sequence <string> values);
-        boolean booleanTypeArg([in] boolean boo);
-        any anyTypeArg([in] any obj);
-        sequence <any> getInitArgs();
-    };
-}; }; };
-
-#endif

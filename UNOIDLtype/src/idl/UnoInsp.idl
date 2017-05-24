@@ -1,10 +1,4 @@
-#ifndef _com_blogspot_pq_UnoInsp_idl_
-#define _com_blogspot_pq_UnoInsp_idl_
+#ifndef _com_blogspot_pq_UnoInsp_
+#define _com_blogspot_pq_UnoInsp_
 
 #include <XUnoInsp.idl>
-
-module com {  module blogspot {  module pq {
-    service UnoInsp : XUnoInsp;
-}; }; };
-
-#endif
