@@ -12,7 +12,7 @@ def defineIDLs():
     # com.blogspot.pq.XUnoInspの定義
     xunoinsp = UNOIDL("com.blogspot.pq.XUnoInsp")
     xunoinsp.include("com.sun.star.uno.XInterface")
-    xunoinsp.method(
+    xunoinsp.sub(
         "string stringTypeArg([in] string value)",
         "sequence <string> stringSeqenceTypeArg([in] sequence <string> values)",
         "boolean booleanTypeArg([in] boolean boo)",
@@ -24,17 +24,20 @@ class UNOIDL:
     def __init__(self, name):
         self.name = name
         self.includes = tuple()
-        self.methods = tuple() 
-        self.supers = tuple() 
+        self.subs = tuple() 
+        self.super = None
     def include(self, *args):
         self._args(args, "includes")
-    def method(self, *args):   
-        self._args(args, "methods")     
-    def super(self, *args):
-        self._args(args, "supers") 
+    def sub(self, *args):   
+        self._args(args, "subs")     
+    def super(self, super):
+        self.super = super
     def _args(self, args, attr):
         if isinstance(args, tuple) and len(args) > 0:
             setattr(self, attr, args)  
+            
+            
+            
 def createIDL(DIC=None):
     if DIC is None:
         DIC = getDIC()
@@ -47,6 +50,10 @@ def createIDL(DIC=None):
     for idl in defineIDLs():
         ms = idl.name.split(".")
         b = ms.pop()
+        main = "    " 
+        main += "interface " if b.startswith("X") else "service "
+        if idl.super:
+            main += " :  " + idl.super.replace(".", "::")
         with open(b + ".idl", "w", encoding="utf-8") as f:
             lines = list()
             s = "_" + idl.name.replace(".", "_") + "_"  
@@ -60,11 +67,12 @@ def createIDL(DIC=None):
             
             
             
+            
+            
             f.write("\n".join(lines))
             
             
-#             s = "\n    "
-#             s += "interface " if b.startswith("X") else "service "
+
 #             
 #             
 #             s = "" 
