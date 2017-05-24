@@ -20,7 +20,7 @@ if ctx:
         
 # PyUnoComponentの実行
 try:       
-    pycomp = smgr.createInstanceWithContext("com.blogspot.pq.UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
+    pycomp = smgr.createInstanceWithContext("UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
     s = pycomp.stringTypeArg("文字列を渡しました。")
     print(s)
     s = pycomp.stringSeqenceTypeArg(("文字列のタプルを渡しました",))
@@ -34,14 +34,16 @@ try:
     print(s)  
     s = pycomp.anyTypeArg("Any型に文字列を渡す")
     print(s)
+except:
+    import traceback
+    traceback.print_exc()
+try:
     pycomp = smgr.createInstanceWithArgumentsAndContext("com.blogspot.pq.UnoInsp", ("withArgs",), ctx)  # サービス名か実装名でインスタンス化。
     s = pycomp.getInitArgs()
     print(s)
 except:
     import traceback
     traceback.print_exc()
-# except Exception as e:
-#     print(e)
 
 # soffice.binの終了処理。これをしないとLibreOfficeを起動できなくなる。
 desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
