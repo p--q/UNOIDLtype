@@ -29,7 +29,7 @@ def createRDB(DIC=None):
             args = [idlc,"-I.","-I" + sdkidl_path, "-O..", i]
             subprocess.run(args)  # idlファイルをコンパイルして親フォルダに出力する。
         os.chdir(DIC["SRC_PATH"])  # srcフォルダに移動
-        unordb_file = DIC["BASE_NAME"] + ".uno.rdb"  # RDBファイル名を取得。
+        unordb_file = DIC["BASENAME"] + ".uno.rdb"  # RDBファイル名を取得。
         createBK(unordb_file, DIC["BACKUP"])  # すでにあるrdbファイルのバックアップ。
         urds = glob.glob("*.urd")  # urdファイルのリストを取得。
         if urds:  # urdファイルがあるとき

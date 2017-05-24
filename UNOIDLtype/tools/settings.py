@@ -13,38 +13,40 @@ def createBK(path, flag=True):  # 引数のファイルがあれば拡張子bk�
             print("The previous version of " + os.path.basename(path) + " file has been renamed for backup.")  
         else:
             os.remove(path)  # 既存のファイルを削除。
-def getDIC():
-    print("This script uses the name of the py file in the src folder as the name of the oxt file.")
-    imp = "IMPLE_NAME"  # 実装サービス名の辞書のキー。
-    ser = "SERVICE_NAME" # サービス名の辞書のキー。
-    src_path = os.path.join(os.path.dirname(sys.path[0]), "src")  # srcフォルダの絶対パスを取得。
-    os.chdir(src_path)  # srcフォルダに移動。
-    pys = glob.glob("*.py")  # srcフォルダの直下にあるpyファイルのリストを取得。複数ファイルには未対応。
-    if pys:  # pyファイルが取得できた時
-        pycompo = pys[0]  # pyファイル名を取得。
-        DIC = {
-            "ComponentFile": pycompo,  # Python UNO Componentファイル名。
-            imp: None,  # 実装サービス名
-            ser: None,  # サービス名
-            "HANDLED_PROTOCOL": None  # プロトコールハンドラー名。自動取得未対応。
-            }
-        DIC["BASE_NAME"], _ = os.path.splitext(pycompo)  # pyファイルの拡張子以外の名前を取得。  # これがrdbファイル名、.componentsファイル名、oxtファイル名になる。
-        DIC["SRC_PATH"] = src_path  # srcフォルダのパス
-        DIC["BACKUP"] = False  # ファイルのバックアップ。Falseでしない。
+class Pycompo:
+    def __init__(self, pycompo):  # これがrdbファイル名、.componentsファイル名、oxtファイル名になる。
+        self.f = pycompo
+        self.imple_name = None
+        self.service_name = None
+        self.handled_protocol = None
+        self.getVal(pycompo)
+    def getVal(self, pycompo):  
+        imp = "IMPLE_NAME"  # 実装サービス名の辞書のキー。
+        ser = "SERVICE_NAME" # サービス名の辞書のキー。     
         with open(pycompo, "r") as f:  # pythonpathフォルダにはまだパスが通らずインポートではエラーが出るのでテキストファイルとして読み込む。
             d = dict()  # exec()の名前空間を受ける辞書。
             for line in f:  # ファイルの先頭の行から読みこむ
                 if line.startswith(imp):  # 行頭がimpで始まっている時
                     exec(line, d)  # dにimpを受け取る。
-                    DIC[imp] = d[imp]  # DICにimpを受け取る。
+                    self.imple_name = d[imp]  # 実装サービス名を取得。
                 elif line.startswith(ser):  # 行頭がserで始まっている時
-                    exec(line, d)  # dにimpを受け取る。
-                    DIC[ser] = d[ser]  # DICにserを受け取る。
-                elif DIC[imp] and DIC[ser]:  # impとserを取得したらfor文を出る。
+                    exec(line, d)  # dにserを受け取る。
+                    self.service_name = d[ser]  # サービス名を取得。
+                elif self.imple_name and self.service_name:  # impとserを取得したらfor文を出る。
                     break
-            else:
-                print("The implementation service name or service name could not be obtained.")     
-    else:
+def getDIC():
+    print("This script uses the name of the PyDev Project name as the name of the oxt file.")
+    DIC = dict()
+    DIC["BACKUP"] = True  # ファイルのバックアップ。Falseでしない。
+    DIC["Pycompos"] = list()
+    DIC["SRC_PATH"] = os.path.join(os.path.dirname(sys.path[0]), "src")  # srcフォルダの絶対パスを取得。
+    DIC["BASENAME"] = os.path.basename(os.path.dirname(DIC["SRC_PATH"]))
+    os.chdir(DIC["SRC_PATH"])  # srcフォルダに移動。
+    for pycompo in glob.iglob("*.py"):  # srcフォルダの直下にあるpyファイルのリストを取得。
+        p = Pycompo(pycompo) 
+        if p.imple_name and p.service_name:
+            DIC["Pycompos"].append(p)
+    if not DIC["Pycompos"]:
         print("There is no component file in the src folder.")
         sys.exit()
     return DIC

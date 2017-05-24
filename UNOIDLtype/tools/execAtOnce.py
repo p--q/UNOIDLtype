@@ -7,6 +7,7 @@ from settings import getDIC
 if __name__ == '__main__':
     # シェルコマンドのエラーでは止まらないのでログを最初から確認する必要あり。
     DIC = getDIC()
+    DIC["BACKUP"] = False
     print("\ncreateRDB\n")
     createRDB(DIC)
 #     print("\ncreateXCUs\n")

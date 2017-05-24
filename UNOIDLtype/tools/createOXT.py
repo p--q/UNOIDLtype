@@ -13,7 +13,7 @@ def createOXT(DIC=None):
     oxtf = os.path.join(DIC["SRC_PATH"],"..","oxt")  # oxtフォルダの絶対パスの取得。
     if not os.path.exists(oxtf):  # oxtフォルダがなければ作成する。
         os.mkdir(oxtf)
-    oxt = os.path.join(oxtf,DIC["BASE_NAME"] + ".oxt") # 作成するoxtファイルの絶対パスを取得。
+    oxt = os.path.join(oxtf,DIC["BASENAME"] + ".oxt") # 作成するoxtファイルの絶対パスを取得。
     createBK(oxt, DIC["BACKUP"])  # すでにあるoxtファイルをbkに改名。
     os.chdir(DIC["SRC_PATH"])  # srcフォルダに移動。
     if not shutil.which("zip"):  # zipコマンドの有効を確認。
