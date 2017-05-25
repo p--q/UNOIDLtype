@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='utf-8'?>
-<manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest"><manifest:file-entry manifest:full-path="PyUnoComponent.uno.rdb" manifest:media-type="application/vnd.sun.star.uno-typelibrary;type=RDB" /><manifest:file-entry manifest:full-path="PyUnoComponent.components" manifest:media-type="application/vnd.sun.star.uno-components" /></manifest:manifest>
+<manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest"><manifest:file-entry manifest:full-path="UNOIDLtype.uno.rdb" manifest:media-type="application/vnd.sun.star.uno-typelibrary;type=RDB" /><manifest:file-entry manifest:full-path="UNOIDLtype.components" manifest:media-type="application/vnd.sun.star.uno-components" /></manifest:manifest>

@@ -3,7 +3,7 @@
 
 #include <com/sun/star/uno/XInterface.idl>
 
-module com {  module blogspot {  module pq {
+module com {module blogspot {module pq {
     interface XUnoInsp {
         string stringTypeArg([in] string value);
         sequence <string> stringSeqenceTypeArg([in] sequence <string> values);
@@ -11,6 +11,6 @@ module com {  module blogspot {  module pq {
         any anyTypeArg([in] any obj);
         sequence <any> getInitArgs();
     };
-}; }; };
+};};};
 
 #endif
