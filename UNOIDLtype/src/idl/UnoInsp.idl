@@ -3,8 +3,8 @@
 
 #include <XUnoInsp.idl>
 
-module com {  module blogspot {  module pq {
+module com {module blogspot {module pq {
     service UnoInsp : XUnoInsp;
-}; }; };
+};};};
 
 #endif

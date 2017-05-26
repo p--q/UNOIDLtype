@@ -5,7 +5,7 @@ SERVICE_NAME = "com.blogspot.pq.UnoInsp"
 def create(ctx, *args):
     try:
         import component
-        return component.create(IMPLE_NAME, ctx, *args)
+        return component.create(IMPLE_NAME, SERVICE_NAME, ctx, *args)
     except Exception as e:
         print(e)
 # Registration

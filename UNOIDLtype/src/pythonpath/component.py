@@ -6,8 +6,8 @@ from com.blogspot.pq import XUnoInsp
 IMPLE_NAME = None
 SERVICE_NAME = None
 def create(imple_name, service_name, ctx, *args):
-    nonlocal IMPLE_NAME
-    nonlocal SERVICE_NAME
+    global IMPLE_NAME
+    global SERVICE_NAME
     if IMPLE_NAME is None:
         IMPLE_NAME = imple_name 
     if SERVICE_NAME is None:
