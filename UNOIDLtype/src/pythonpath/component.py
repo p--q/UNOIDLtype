@@ -5,7 +5,7 @@ from com.sun.star.lang import XServiceInfo
 from com.blogspot.pq import XUnoInsp
 IMPLE_NAME = None
 SERVICE_NAME = None
-def create(imple_name, service_name, ctx, *args):
+def create(ctx, *args, imple_name, service_name):
     global IMPLE_NAME
     global SERVICE_NAME
     if IMPLE_NAME is None:

@@ -10,17 +10,17 @@ if __name__ == '__main__':
     DIC = getDIC()
     DIC["BACKUP"] = False
     
-#     print("\ncreateIDLs\n")
-#     createIDLs(DIC)   
+    print("\ncreateIDLs\n")
+    createIDLs(DIC)   
     
-#     print("\ncreateRDB\n")
-#     createRDB(DIC)
-    
+    print("\ncreateRDB\n")
+    createRDB(DIC)
+ 
 #     print("\ncreateXCUs\n")
 #     createXCUs(DIC)
 
-#     print("\ncreateXMLs\n")
-#     createXMLs(DIC)
+    print("\ncreateXMLs\n")
+    createXMLs(DIC)
     
     print("\ncreateOXT\n")
     createOXT(DIC)
