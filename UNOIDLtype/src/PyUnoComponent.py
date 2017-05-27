@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 IMPLE_NAME = "UnoInsp"
 SERVICE_NAME = "com.blogspot.pq.UnoInsp"
-def create(ctx, *args):
-    try:
+def create(ctx, *args):    
         import component
-        return component.create(IMPLE_NAME, SERVICE_NAME, ctx, *args)
-    except Exception as e:
-        print(e)
+        return component.create(ctx, *args, imple_name=IMPLE_NAME, service_name=SERVICE_NAME)
 # Registration
 import unohelper
 g_ImplementationHelper = unohelper.ImplementationHelper()

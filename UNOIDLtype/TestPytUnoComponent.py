@@ -39,6 +39,7 @@ except:
     traceback.print_exc()
 try:
     pycomp = smgr.createInstanceWithArgumentsAndContext("com.blogspot.pq.UnoInsp", ("withArgs",), ctx)  # サービス名か実装名でインスタンス化。
+    print(pycomp)
     s = pycomp.getInitArgs()
     print(s)
 except:
