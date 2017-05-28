@@ -18,7 +18,7 @@ if ctx:
     print("Using remote servicemanager\n")
     if not smgr:
         print( "ERROR: no service manager" )
-        
+         
 # PyUnoComponentの実行
 try:       
     pycomp = smgr.createInstanceWithContext("UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
@@ -43,7 +43,7 @@ try:
     print(s)
 except:
     traceback.print_exc()
-
+ 
 # soffice.binの終了処理。これをしないとLibreOfficeを起動できなくなる。
 desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
 from com.sun.star.beans import PropertyValue
@@ -54,4 +54,4 @@ if terminated:
     print("\nThe Office has been terminated.")  # 未保存のドキュメントがないとき。
 else:
     print("\nThe Office is still running. Someone else prevents termination.")  # 未保存のドキュメントがあってキャンセルボタンが押された時。
-     
+      
