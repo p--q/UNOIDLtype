@@ -10,30 +10,37 @@ UNOIDL = "ObjInsp"  # UNOIDLにしているクラス名。
 # UNOIDL = "com.blogspot.pq.UnoInsp"
 # UNOオブジェクトのインスタンス化はgetUNOComponent[MODE](UNOIDL, args)で行う。argsはタプル。
 def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サービスマネジャー、smgr: サービスマネジャー
-    try:
-        pycomp = getUNOComponent[MODE](UNOIDL)
-        s = pycomp.stringTypeArg("文字列を渡しました。")
-        print(s)
-        s = pycomp.stringSeqenceTypeArg(("文字列のタプルを渡しました",))
-        print(s)
-        s = pycomp.booleanTypeArg(True)
-        if s:
-            print("Trueが渡されました。")
-        else:
-            print("Falseが渡されました。")
-        s = pycomp.anyTypeArg(smgr)
-        print(s)  
-        s = pycomp.anyTypeArg("Any型に文字列を渡す")
-        print(s)    
-    except:
-        traceback.print_exc()
-        
-    try:
-        pycomp = getUNOComponent[MODE](UNOIDL, ("withArgs",))
-        s = pycomp.getInitArgs()
-        print(s)
-    except:
-        traceback.print_exc()
+    
+    
+    getUNOComponent = {"Automation": automation}
+    getUNOComponent[MODE] = partial(getUNOComponent[MODE], ctx, smgr) 
+    print = appendOutput
+    
+    
+#     try:
+    pycomp = getUNOComponent[MODE](UNOIDL)
+    s = pycomp.stringTypeArg("文字列を渡しました。")
+    print(s)
+    s = pycomp.stringSeqenceTypeArg(("文字列のタプルを渡しました",))
+    print(s)
+    s = pycomp.booleanTypeArg(True)
+    if s:
+        print("Trueが渡されました。")
+    else:
+        print("Falseが渡されました。")
+    s = pycomp.anyTypeArg(smgr)
+    print(s)  
+    s = pycomp.anyTypeArg("Any型に文字列を渡す")
+    print(s)    
+#     except:
+#         traceback.print_exc()
+#         
+#     try:
+#         pycomp = getUNOComponent[MODE](UNOIDL, ("withArgs",))
+#         s = pycomp.getInitArgs()
+#         print(s)
+#     except:
+#         traceback.print_exc()
  
 def unoComponent(ctx, smgr, UNOIDL, args=None):  # 拡張機能で定義したUNOIDLのインスタンスを返す。
     print("Running in UNO Component mode\n")
@@ -44,30 +51,46 @@ def automation(ctx, smgr, unoidl_class, args=None):  # src/pythonpathのcomponen
     cls = getattr(component, unoidl_class)
     return cls(ctx) if args is None else cls(ctx, args)
 # マクロモード用
-def printToList(ctx, smgr, prt=None):
-    def decorate(func):
-        @wraps(func)
-        def wrapper():
-            print = lambda x: prt.append(x)
-            func(ctx, smgr)
-        return wrapper
-    return decorate
-    
+import ast
+class PrintNodeTransformer(ast.NodeTransformer):
+    def visit_Name(self, node):
+        if node.id == 'print':
+            name = ast.Name(id='appendOutput', ctx=ast.Load())
+            return ast.copy_location(name, node)
+        return node
+
+prt = []
+def appendOutput(item):
+    global prt
+    prt.append(item)    
+
 
 
 def execAsMacro():  # マクロモードで呼び出す関数。
-    getUNOComponent = {"Automation": automation}  # マクロモードとオートメーションは同じ。
-    prt = ["Running in Macro mode"]
+#     getUNOComponent = {"Automation": automation}  # マクロモードとオートメーションは同じ。
+#     prt = ["Running in Macro mode"]
     ctx = XSCRIPTCONTEXT.getComponentContext()
     smgr = ctx.getServiceManager()
     
-#     import inspect
-#     srclines = inspect.getsource(testCode).splitlines()
     
-#     prt.append("\n".join(srclines))
+    prt.append("Running in Macro mode")    
+    
+#     import inspect
+#     src = inspect.getsource(testCode)
+#     top = ast.parse(src, mode='exec')
+#     node = PrintNodeTransformer().visit(top)
+#     code = compile(node, '', 'exec')
+#     exec(code)
+    
 
-    wrapped = printToList(ctx, smgr, prt)(testCode)
-    wrapped()
+
+    
+    
+    
+#     prt.append(ast.dump(top))
+
+#     wrapped = printToList(ctx, smgr, prt)(testCode)
+#     wrapped()
 #     def appendOutput(item):
 #         output.append(item)
 
@@ -77,10 +100,14 @@ def execAsMacro():  # マクロモードで呼び出す関数。
 #     smgr = ctx.getServiceManager()
 
 
+#     def appendOutput(item):
+#         prt.append(item)    
+
+
 
      
-     
-#     testCode(ctx, smgr) 
+    
+    testCode(ctx, smgr) 
     desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
     doc = desktop.loadComponentFromURL("private:factory/swriter", "_blank", 0, ())
     doc.getText().setString("\n".join(prt))
@@ -119,10 +146,10 @@ def connectOffice(func):
             print("\nThe Office is still running. Someone else prevents termination.")  # 未保存のドキュメントがあってキャンセルボタンが押された時。
     return wrapper
 g_exportedScripts = execAsMacro,  # マクロセレクターに表示させる関数を提示。
-getUNOComponent = {
-    "Automation": automation,
-    "UNOComponent": unoComponent
-    }
+# getUNOComponent = {
+#     "Automation": automation,
+#     "UNOComponent": unoComponent
+#     }
 if __name__ == "__main__":
     testCode = connectOffice(testCode)
     testCode()
