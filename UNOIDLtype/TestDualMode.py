@@ -4,12 +4,15 @@ import officehelper
 import traceback
 from functools import wraps, partial
 import sys
-MODE = "Automation"  # 実行モードの選択。マクロモードでもAutomationモードを使う。
+MODE = "Automation"  # 実行モードの選択。
 UNOIDL = "ObjInsp"  # UNOIDLにしているクラス名。
-# MODE = "UNOComponent"
-# UNOIDL = "com.blogspot.pq.UnoInsp"
+MODE = "UNOComponent"  # 実行モードの選択。
+UNOIDL = "com.blogspot.pq.UnoInsp"  # UNOIDLにしているクラス名。
 # UNOオブジェクトのインスタンス化はgetUNOComponent[MODE](UNOIDL, args)で行う。argsはタプル。
 def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サービスマネジャー、smgr: サービスマネジャー
+    
+    
+    
     try:
         pycomp = getUNOComponent[MODE](UNOIDL)
         s = pycomp.stringTypeArg("文字列を渡しました。")
@@ -27,7 +30,7 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         print(s)    
     except:
         traceback.print_exc()
-         
+           
     try:
         pycomp = getUNOComponent[MODE](UNOIDL, ("withArgs",))
         s = pycomp.getInitArgs()
@@ -35,6 +38,11 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
     except:
         traceback.print_exc()
  
+ 
+ 
+ 
+ 
+
 def unoComponent(ctx, smgr, UNOIDL, args=None):  # 拡張機能で定義したUNOIDLのインスタンスを返す。
     print("Running in UNO Component mode\n")
     return smgr.createInstanceWithContext(UNOIDL, ctx) if args is None else smgr.createInstanceWithArgumentsAndContext(UNOIDL, args, ctx)    
