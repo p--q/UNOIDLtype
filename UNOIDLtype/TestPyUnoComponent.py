@@ -1,6 +1,7 @@
 #!/opt/libreoffice5.2/program/python
 # -*- coding: utf-8 -*-
 import officehelper
+import traceback
 def connect():  # LibreOfficeをバックグラウンドで起動してコンポネントテクストを取得する。
     ctx = None
     try:
@@ -35,15 +36,12 @@ try:
     s = pycomp.anyTypeArg("Any型に文字列を渡す")
     print(s)
 except:
-    import traceback
     traceback.print_exc()
 try:
     pycomp = smgr.createInstanceWithArgumentsAndContext("com.blogspot.pq.UnoInsp", ("withArgs",), ctx)  # サービス名か実装名でインスタンス化。
-    print(pycomp)
     s = pycomp.getInitArgs()
     print(s)
 except:
-    import traceback
     traceback.print_exc()
 
 # soffice.binの終了処理。これをしないとLibreOfficeを起動できなくなる。
