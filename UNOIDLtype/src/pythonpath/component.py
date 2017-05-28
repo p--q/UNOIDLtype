@@ -35,3 +35,4 @@ class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):
         return name == SERVICE_NAME
     def getSupportedServiceNames(self):
         return (SERVICE_NAME,)
+
