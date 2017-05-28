@@ -12,5 +12,6 @@ encoding//tools/createXCUs.py=utf-8
 encoding//tools/createXMLs.py=utf-8
 encoding//tools/deployOXT.py=utf-8
 encoding//tools/settings.py=utf-8
+encoding/ExecAutomation.py=utf-8
 encoding/TestDualMode.py=utf-8
-encoding/TestUNOComponent.py=utf-8
+encoding/TestPyUnoComponent.py=utf-8

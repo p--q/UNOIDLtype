@@ -44,7 +44,7 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
  
 
 def unoComponent(ctx, smgr, UNOIDL, args=None):  # 拡張機能で定義したUNOIDLのインスタンスを返す。
-    print("Running in UNO Component mode\n")
+    print("\nRunning in UNO Component mode\n")
     return smgr.createInstanceWithContext(UNOIDL, ctx) if args is None else smgr.createInstanceWithArgumentsAndContext(UNOIDL, args, ctx)    
 def automation(ctx, smgr, unoidl_class, args=None):  # src/pythonpathのcomponent.pyファイルのUNOComponentのインスタンスとなるべきクラスのインスタンスを返す。
     print("Running in Automation mode\n")
