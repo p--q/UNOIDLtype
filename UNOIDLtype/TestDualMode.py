@@ -44,10 +44,10 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
  
 
 def unoComponent(ctx, smgr, UNOIDL, args=None):  # 拡張機能で定義したUNOIDLのインスタンスを返す。
-    print("\nRunning in UNO Component mode\n")
+#     print("\nRunning in UNO Component mode\n")
     return smgr.createInstanceWithContext(UNOIDL, ctx) if args is None else smgr.createInstanceWithArgumentsAndContext(UNOIDL, args, ctx)    
 def automation(ctx, smgr, unoidl_class, args=None):  # src/pythonpathのcomponent.pyファイルのUNOComponentのインスタンスとなるべきクラスのインスタンスを返す。
-    print("Running in Automation mode\n")
+#     print("Running in Automation mode\n")
     from src.pythonpath import component
     cls = getattr(component, unoidl_class)
     return cls(ctx) if args is None else cls(ctx, args)
@@ -70,6 +70,7 @@ def connectOffice(func):
             sys.exit()
         print("Using remote servicemanager\n") 
         getUNOComponent[MODE] = partial(getUNOComponent[MODE], ctx, smgr)  # unoComponentに先にctxとsmgrを渡しておく
+        print("Running in {} mode\n".format(MODE))
         try:
             func(ctx, smgr)  # 引数の関数の実行。
         except:
