@@ -32,26 +32,20 @@ def replaceFunc(**kwargs):  # func内のoldfuncをnewfuncに置換する。引�
         else:  # デコレータ式がないとき
             n = -1
         funclines, t = indentList(tab, srclines[n+1])  # インデントへの対応。tはタブの数。       
-        newfuncs = list()  # 新しい関数のコードを入れるリスト。   
         tabs = tab * (t + 1)
         exprs = tabs + "#replace functions"  # 挿入する式の文字列。
+        glb = dict()  # exec()の仮想モジュールのグローバル名前空間へ渡す辞書。
         for oldfunc, newfunc in kwargs.items():  # 引数の辞書について。
-            newfunc_srclines = inspect.getsource(newfunc).splitlines()  # newfuncのコードの行をリストにする。
-            newfunclines, _ = indentList(tab, newfunc_srclines[0])  # インデント対応コードを取得。
-            newfunclines.extend(newfunc_srclines)  # newfuncのコードのリストを完成。
-            newfuncs.extend(newfunclines)
             exprs += "\n" + tabs + "{} = {}".format(oldfunc, newfunc.__name__)
+            glb[newfunc.__name__]  = newfunc
         srclines.insert(n + 2, exprs)  # func内に oldfunc = newfunc を挿入。
         funclines.extend(srclines[n+1:])
-        funclines.extend(newfuncs)
         src = '\n'.join(funclines)  # funcのソースを再作成。
-        
-        print(src)
-        temp = dict()  # exec()の仮想モジュールの名前空間を受けとる辞書。
-        exec(compile(src,'generated in replaceFunc','exec'), temp, temp)  # srcをコンパイルしてtempに取得。
+        loc = dict()  # exec()の仮想モジュールのローカル名前空間へ渡す辞書。
+        exec(compile(src,'generated in replaceFunc','exec'), glb, loc)  # srcをコンパイルしてtempに取得。glbとlocは使われた後新しく書き換えられる。
         @wraps(func)
         def wrapper(*args, **kwargs):
-            return temp[func.__name__](*args, **kwargs)  # 作り替えたfuncを返す。
+            return loc[func.__name__](*args, **kwargs)  # 作り替えたfuncを返す。
         return wrapper
     return decorate
     
