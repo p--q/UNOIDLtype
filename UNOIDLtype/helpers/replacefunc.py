@@ -33,12 +33,19 @@ def replaceFunc(**kwargs):  # func内のoldfuncをnewfuncに置換する。引�
             n = -1
         funclines, t = indentList(tab, srclines[n+1])  # インデントへの対応。tはタブの数。       
         tabs = tab * (t + 1)
-        exprs = tabs + "#replace functions"  # 挿入する式の文字列。
+        exprs = ""
         glb = dict()  # exec()の仮想モジュールのグローバル名前空間へ渡す辞書。
-        for oldfunc, newfunc in kwargs.items():  # 引数の辞書について。
-            exprs += "\n" + tabs + "{} = {}".format(oldfunc, newfunc.__name__)
-            glb[newfunc.__name__]  = newfunc
-        srclines.insert(n + 2, exprs)  # func内に oldfunc = newfunc を挿入。
+        for key, val in kwargs.items():  # 引数の辞書について。
+            if isinstance(val, str):  # 値に文字列が渡された時
+                for m, line in enumerate(srclines[n+2:]):  # 関数の2行目から各行について
+                    if key in line:  # keyをvalに置換する。
+                        srclines[n+2+m] = line.replace(key, val)
+            else:  # 値が文字列でないときは関数オブジェクトと考える。
+                exprs += "\n" + tabs + "{} = {}".format(key, val.__name__)
+                glb[val.__name__]  = val
+        if exprs:
+            exprs = tabs + "#replace functions" + exprs
+            srclines.insert(n + 2, exprs)  # func内に oldfunc = newfunc を挿入。
         funclines.extend(srclines[n+1:])
         src = '\n'.join(funclines)  # funcのソースを再作成。
         loc = dict()  # exec()の仮想モジュールのローカル名前空間へ渡す辞書。
