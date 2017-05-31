@@ -1,12 +1,10 @@
 #!/opt/libreoffice5.2/program/python
 # -*- coding: utf-8 -*-
+import traceback
 
 
-# UNOオブジェクトのインスタンス化はgetUNOComponent[MODE](UNOIDL, args)で行う。argsはタプル。
 def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サービスマネジャー、smgr: サービスマネジャー
-    
-    
-    
+
     try:
         pycomp = smgr.createInstanceWithContext("UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
         s = pycomp.stringTypeArg("文字列を渡しました。")
@@ -33,8 +31,14 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         traceback.print_exc()
 
 
-
 if __name__ == "__main__":
     from helpers.connectoffice import connectOffice
-    testCode = connectOffice(testCode)
-    testCode()
+#     MODE = "UNOComponent"
+    MODE = "Automation"
+#     MODE = "Macro"
+    with connectOffice(MODE, testCode) as func:
+        func()
+        
+    
+    
+
