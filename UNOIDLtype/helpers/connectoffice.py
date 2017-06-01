@@ -4,41 +4,27 @@ import officehelper
 import traceback
 import sys
 from com.sun.star.beans import PropertyValue
-from .replacefunc import replaceFunc
 from contextlib import contextmanager
 from functools import partial
-
-def replacedPrint(arg):
-    print("置換された関数で出力 {}".format(arg))
-
-# def unoComponent(ctx, smgr, UNOIDL, args=None):  # 拡張機能で定義したUNOIDLのインスタンスを返す。
-# #     print("\nRunning in UNO Component mode\n")
-#     return smgr.createInstanceWithContext(UNOIDL, ctx) if args is None else smgr.createInstanceWithArgumentsAndContext(UNOIDL, args, ctx)    
-# def automation(ctx, smgr, unoidl_class, args=None):  # src/pythonpathのcomponent.pyファイルのUNOComponentのインスタンスとなるべきクラスのインスタンスを返す。
-# #     print("Running in Automation mode\n")
-#     from src.pythonpath import component
-#     cls = getattr(component, unoidl_class)
-#     return cls(ctx) if args is None else cls(ctx, args)
-
-
-def automation():
-    from src.pythonpath import component
-    pass
-
-
+class Automation:
+    def __init__(self, smgr, services, cls_name):
+        from src.pythonpath import component
+        self.smgr = smgr
+        self.services = services
+        self.cls = getattr(component, cls_name)
+    def createInstanceWithContext(self, service, ctx):
+        if service in self.services:
+            return self.cls(ctx)
+        else:
+            return self.smgr.createInstanceWithContext(service, ctx)
+    def createInstanceWithArgumentsAndContext(self, service, args, ctx):
+        if service in self.services:
+            return self.cls(ctx, args)
+        else:
+            return self.smgr.createInstanceWithArgumentsAndContext(service, args, ctx)
 # funcの前後でOffice接続の処理
 @contextmanager
-def connectOffice(MODE, func):
-    
-    if MODE == "Automation":
-        print("Running in Automation mode\n")
-        kwargs = {
-            "smgr.createInstanceWithContext": "automation",
-            "smgr.createInstanceWithArgumentsAndContext": "automation"
-        }
-        
-        func = replaceFunc(**kwargs)(func, debug=True)
-    
+def connectOffice(MODE, services, cls_name, func):
     ctx = None
     try:
         ctx = officehelper.bootstrap()  # コンポーネントコンテクストの取得。
@@ -49,6 +35,11 @@ def connectOffice(MODE, func):
         sys.exit()
     print("Connected to a running office ...\n")
     smgr = ctx.getServiceManager()  # サービスマネジャーの取得。
+    if MODE == "UNOComponent":
+        print("Running in UNOcomponent mode\n")
+    elif MODE == "Automation":
+        print("Running in Automation mode\n")
+        smgr = Automation(smgr, services, cls_name)
     func = partial(func, ctx, smgr)
     try:
         yield func
