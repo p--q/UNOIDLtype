@@ -28,42 +28,17 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
     except:
         traceback.print_exc()
 
-def macroMode():
-    ctx = XSCRIPTCONTEXT.getComponentContext()
-    smgr = ctx.getServiceManager()
-    testCode(ctx, smgr)
-    
-    
-    
-g_exportedScripts = macroMode,
+objinsp = "ObjInsp", "UnoInsp", "com.blogspot.pq.UnoInsp"
+UNOCompos = objinsp,
+func = testCode
+
+from helpers.connectoffice import connectOffice, macroMode
+def macro():
+    macroMode(XSCRIPTCONTEXT, UNOCompos, func)
+g_exportedScripts = macro,
+MODE = None
 if __name__ == "__main__":
-    from collections import namedtuple
-    MODE = None
-#     UNOComponent = namedtuple("UNOComponent", "class_name imple_name service_name")
-    
     MODE = "Automation"
-    #  class_name imple_name service_name
-#     objinsp = UNOComponent("ObjInsp", "UnoInsp", "com.blogspot.pq.UnoInsp")
-
-    objinsp = "ObjInsp", "UnoInsp", "com.blogspot.pq.UnoInsp"
-    objinsp2 = "ObjInsp2", "UnoInsp2", "com.blogspot.pq.UnoInsp2"
-    UNOCompos = objinsp,objinsp2
-    
-    
-    # Class, IMPLEMENTATION_SERVICE_NAME, SERVICE_NAME
-
-
-#     SERVICE_NAMES = "UnoInsp", "com.blogspot.pq.UnoInsp"
-#     UNO_CLASSS = "ObjInsp",
-#     from functools import partial
     from helpers.connectoffice import connectOffice
-#     connectOffice = partial(connectOffice, MODE)
-#     testCode = connectOffice(objinsp)(testCode)
-#     testCode()
-    
-    with connectOffice(MODE, UNOCompos, testCode) as func:
-        func()
-        
-    
-    
-
+    with connectOffice(MODE, UNOCompos, func) as fn:
+        fn()
