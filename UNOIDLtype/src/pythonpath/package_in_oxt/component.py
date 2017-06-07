@@ -3,7 +3,7 @@
 import unohelper
 from com.sun.star.lang import XServiceInfo
 from com.blogspot.pq import XUnoInsp
-from pythonpath.package_in_oxt.rest.output import invokeRest
+# from pythonpath.package_in_oxt.rest.output import invokeRest
 IMPLE_NAME = None
 SERVICE_NAME = None
 def create(ctx, *args, imple_name, service_name):
@@ -50,8 +50,8 @@ class ObjInsp(unohelper.Base, XServiceInfo, XUnoInsp):
         return self.args
     def invokeWebbrowser(self, txt):
         
-        from .rest import output
-        output.invokeRest(txt)
+        from .rest import wsgi
+        wsgi.wsgiServer(txt)
 #         from .rest import resty
 #         from wsgiref.simple_server import make_server
 #         import webbrowser

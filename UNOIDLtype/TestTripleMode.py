@@ -18,7 +18,7 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         print(s)  
         s = pycomp.anyTypeArg("Any型に文字列を渡す")
         print(s)    
-        s = pycomp.invokeWebbrowser("テスト")
+        s = pycomp.invokeWebbrowser("テスト引数")
         
     except:
         traceback.print_exc()
@@ -34,13 +34,14 @@ objinsp = "ObjInsp", "UnoInsp", "com.blogspot.pq.UnoInsp"
 UNOCompos = objinsp,
 func = testCode
 
-from helpers.connectoffice import connectOffice, macroMode
-def macro():
-    macroMode(XSCRIPTCONTEXT, UNOCompos, func)
-g_exportedScripts = macro,
+
+# def macro():
+#     from helpers.connectoffice import macroMode
+#     macroMode(XSCRIPTCONTEXT, UNOCompos, func)
+# g_exportedScripts = macro,
 MODE = None
 if __name__ == "__main__":
-#     MODE = "Automation"
+    MODE = "Automation"
     from helpers.connectoffice import connectOffice
     with connectOffice(MODE, UNOCompos, func) as fn:
         fn()
