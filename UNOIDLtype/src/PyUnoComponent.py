@@ -3,7 +3,7 @@
 IMPLE_NAME = "UnoInsp"
 SERVICE_NAME = "com.blogspot.pq.UnoInsp"
 def create(ctx, *args):    
-        import component
+        from package_in_oxt import component
         return component.create(ctx, *args, imple_name=IMPLE_NAME, service_name=SERVICE_NAME)
 # Registration
 import unohelper

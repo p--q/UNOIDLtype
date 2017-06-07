@@ -15,7 +15,8 @@ def defineIDLs():  # IDLの定義を設定する。継承しているUNOIDLのid
         "sequence <string> stringSeqenceTypeArg([in] sequence <string> values)",
         "boolean booleanTypeArg([in] boolean boo)",
         "any anyTypeArg([in] any obj)",
-        "sequence <any> getInitArgs()"
+        "sequence <any> getInitArgs()",
+        "void invokeWebbrowser([in] string txt)"
         )
     yield xunoinsp
 class UNOIDL:

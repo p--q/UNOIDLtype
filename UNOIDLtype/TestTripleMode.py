@@ -18,6 +18,8 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         print(s)  
         s = pycomp.anyTypeArg("Any型に文字列を渡す")
         print(s)    
+        s = pycomp.invokeWebbrowser("テスト")
+        
     except:
         traceback.print_exc()
            
@@ -38,7 +40,7 @@ def macro():
 g_exportedScripts = macro,
 MODE = None
 if __name__ == "__main__":
-    MODE = "Automation"
+#     MODE = "Automation"
     from helpers.connectoffice import connectOffice
     with connectOffice(MODE, UNOCompos, func) as fn:
         fn()
