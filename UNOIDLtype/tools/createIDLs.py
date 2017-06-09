@@ -26,7 +26,7 @@ def defineIDLs():  # IDLの定義を設定する。継承しているUNOIDLのid
     xunoinsp = UNOIDL("com.blogspot.pq.XToWebHtml")  # 定義するUNOIDLのフルパスでインスタンス化。XInterfaceは自動include。
     xunoinsp.setSubs(  # 属性、メソッドなど
         "void openInBrowser([in] string html)",
-        "void getBrowser([in] string name)"
+        "void setTitle([in] string title)",
         )
     yield xunoinsp        
 from settings import getDIC, createBK

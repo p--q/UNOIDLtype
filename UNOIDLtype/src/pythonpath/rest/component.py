@@ -17,14 +17,14 @@ def create(ctx, *args, imple_name, service_name):
 class ToWebHtml(unohelper.Base, XServiceInfo, XToWebHtml):  
     def __init__(self, ctx, *args):
         self.ctx = ctx
-        self.args = args  # 引数がないときもNoneではなくタプルが入る。
-        self.browser = None
+        self.args = args  # 引数がないときもNoneではなくタプルが入る。未使用。
+        self.title = ""
     # XToWebHtml
-    def openInBrowser(self, html, title=""):
-        server = wsgi.Wsgi(html, title)
-        server.wsgiServer(self.browser)
-    def getBrowser(self, name):
-        self.browser = name
+    def openInBrowser(self, html):
+        server = wsgi.Wsgi(self.title, html)
+        server.wsgiServer()
+    def setTitle(self, title):
+        self.title = title
     # XServiceInfo
     def getImplementationName(self):
         return IMPLE_NAME
