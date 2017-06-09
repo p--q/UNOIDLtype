@@ -4,7 +4,7 @@ import traceback
 def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サービスマネジャー、smgr: サービスマネジャー
 
     try:
-        pycomp = smgr.createInstanceWithContext("UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
+        pycomp = smgr.createInstanceWithContext("pq.UnoInsp", ctx)  # サービス名か実装名でインスタンス化。
         s = pycomp.stringTypeArg("文字列を渡しました。")
         print(s)
         s = pycomp.stringSeqenceTypeArg(("文字列のタプルを渡しました",))
@@ -18,8 +18,6 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         print(s)  
         s = pycomp.anyTypeArg("Any型に文字列を渡す")
         print(s)    
-        s = pycomp.invokeWebbrowser("テスト引数")
-        
     except:
         traceback.print_exc()
            
@@ -29,6 +27,14 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         print(s)
     except:
         traceback.print_exc()
+        
+    try:
+        browser = smgr.createInstanceWithContext("pq.ToWebHtml", ctx)
+#         browser.registerBrowser('chromium-browser')
+        browser.openInBrowser('<a href="http://knzm.readthedocs.org/en/latest/pep-3333-ja.html">WSGIの仕様書の日本語訳</a>')
+    except:
+        traceback.print_exc()
+    
 
 objinsp = "ObjInsp", "UnoInsp", "com.blogspot.pq.UnoInsp"
 UNOCompos = objinsp,
