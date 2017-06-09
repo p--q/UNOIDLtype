@@ -30,7 +30,7 @@ def testCode(ctx, smgr):  # 引数はデコレーターで受け取る。ctx:サ
         
     try:
         browser = smgr.createInstanceWithContext("pq.ToWebHtml", ctx)
-#         browser.registerBrowser('chromium-browser')
+        browser.getBrowser('firefox')
         browser.openInBrowser('<a href="http://knzm.readthedocs.org/en/latest/pep-3333-ja.html">WSGIの仕様書の日本語訳</a>')
     except:
         traceback.print_exc()

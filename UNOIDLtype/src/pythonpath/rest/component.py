@@ -23,7 +23,7 @@ class ToWebHtml(unohelper.Base, XServiceInfo, XToWebHtml):
     def openInBrowser(self, html, title=""):
         server = wsgi.Wsgi(html, title)
         server.wsgiServer(self.browser)
-    def registerBrowser(self, name):
+    def getBrowser(self, name):
         self.browser = name
     # XServiceInfo
     def getImplementationName(self):
@@ -32,12 +32,3 @@ class ToWebHtml(unohelper.Base, XServiceInfo, XToWebHtml):
         return name == SERVICE_NAME
     def getSupportedServiceNames(self):
         return (SERVICE_NAME,)
-
-
-
-
-
-    
-    
-    
-    

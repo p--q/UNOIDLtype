@@ -21,5 +21,7 @@ class Wsgi:
         host, port = "localhost", 8080  # サーバが受け付けるポート番号を設定。
         httpd = make_server(host, port, self.app)  # appへの接続を受け付けるWSGIサーバを生成。
         url = "http://localhost:{}".format(port)  # 出力先のurlを取得。
+#         if browser is not None:
+#             webbrowser.register(browser)
         webbrowser.get(browser).open_new_tab(url)   # ブラウザでurlを開く。
         httpd.handle_request()  # リクエストを1回だけ受け付けたらサーバを終了させる

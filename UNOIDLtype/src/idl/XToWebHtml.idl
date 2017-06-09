@@ -6,7 +6,7 @@
 module com {module blogspot {module pq {
     interface XToWebHtml {
         void openInBrowser([in] string html);
-        void registerBrowser([in] string name);
+        void getBrowser([in] string name);
     };
 };};};
 
