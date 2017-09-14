@@ -1,0 +1,13 @@
+#ifndef _com_blogspot_pq_XToWebHtml_idl_
+#define _com_blogspot_pq_XToWebHtml_idl_
+
+#include <com/sun/star/uno/XInterface.idl>
+
+module com {module blogspot {module pq {
+    interface XToWebHtml {
+        void openInBrowser([in] string html);
+        void setTitle([in] string title);
+    };
+};};};
+
+#endif

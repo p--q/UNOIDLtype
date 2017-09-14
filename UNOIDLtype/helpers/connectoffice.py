@@ -6,7 +6,7 @@ import sys
 from com.sun.star.beans import PropertyValue
 from contextlib import contextmanager
 from functools import partial
-from src.pythonpath.package_in_oxt import component
+from src.pythonpath.inoxt import component
 class Automation:
     def __init__(self, smgr, UNOCompos):
         self.smgr = smgr

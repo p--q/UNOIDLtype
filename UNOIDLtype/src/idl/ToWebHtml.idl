@@ -1,0 +1,10 @@
+#ifndef _com_blogspot_pq_ToWebHtml_idl_
+#define _com_blogspot_pq_ToWebHtml_idl_
+
+#include <XToWebHtml.idl>
+
+module com {module blogspot {module pq {
+    service ToWebHtml : XToWebHtml;
+};};};
+
+#endif

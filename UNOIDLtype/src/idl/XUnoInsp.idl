@@ -10,7 +10,6 @@ module com {module blogspot {module pq {
         boolean booleanTypeArg([in] boolean boo);
         any anyTypeArg([in] any obj);
         sequence <any> getInitArgs();
-        void invokeWebbrowser([in] string txt);
     };
 };};};
 

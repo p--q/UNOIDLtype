@@ -1,9 +1,7 @@
 #!/opt/libreoffice5.2/program/python
 # -*- coding: utf-8 -*-
-from settings import getDIC, createBK
-import os
-import glob
 def defineIDLs():  # IDLの定義を設定する。継承しているUNOIDLのidlファイルは自動include。
+
     # com.blogspot.pq.UnoInspの定義
     unoinsp = UNOIDL("com.blogspot.pq.UnoInsp")  # 定義するUNOIDLのフルパスでインスタンス化。
     unoinsp.setSuper("XUnoInsp")  # 継承するUNOIDLをフルパスで定義。idlファイルは自動include。
@@ -16,9 +14,24 @@ def defineIDLs():  # IDLの定義を設定する。継承しているUNOIDLのid
         "boolean booleanTypeArg([in] boolean boo)",
         "any anyTypeArg([in] any obj)",
         "sequence <any> getInitArgs()",
-        "void invokeWebbrowser([in] string txt)"
         )
     yield xunoinsp
+    
+    
+    # com.blogspot.pq.ToWebHtmlの定義
+    unoinsp = UNOIDL("com.blogspot.pq.ToWebHtml")  # 定義するUNOIDLのフルパスでインスタンス化。
+    unoinsp.setSuper("XToWebHtml")  # 継承するUNOIDLをフルパスで定義。idlファイルは自動include。
+    yield unoinsp    
+    # com.blogspot.pq.XToWebHtmlの定義
+    xunoinsp = UNOIDL("com.blogspot.pq.XToWebHtml")  # 定義するUNOIDLのフルパスでインスタンス化。XInterfaceは自動include。
+    xunoinsp.setSubs(  # 属性、メソッドなど
+        "void openInBrowser([in] string html)",
+        "void setTitle([in] string title)",
+        )
+    yield xunoinsp        
+from settings import getDIC, createBK
+import os
+import glob    
 class UNOIDL:
     def __init__(self, name):  # UNOIDLのフルパスを引数にする。
         self.name = name  # UNOIDLのフルパス。
